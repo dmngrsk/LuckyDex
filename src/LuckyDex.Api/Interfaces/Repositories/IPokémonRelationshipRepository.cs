@@ -3,9 +3,8 @@ using System.Threading.Tasks;
 
 namespace LuckyDex.Api.Interfaces.Repositories
 {
-    public interface IImageRepository
+    public interface IPokémonRelationshipRepository
     {
-        Task<Image> GetAsync(int id);
-        Task PutAsync(int id, Image image);
+        Task<PokémonRelationship> GetAsync(string id);
     }
 }

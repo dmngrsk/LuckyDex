@@ -23,12 +23,10 @@ namespace LuckyDex.Api
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             var dataStorage = Configuration.GetSection("DataStorage").Get<DataStorageSettings>();
-            services.AddTransient(s => dataStorage.BlobStorage);
             services.AddTransient(s => dataStorage.TableStorage);
 
-            services.AddSingleton<ITrainerRepository, BlobStorageTrainerRepository>();
-            services.AddSingleton<IImageRepository, BlobStorageImageRepository>();
-            services.AddSingleton<IPokémonRepository, TableStoragePokémonRepository>();
+            services.AddSingleton<ITrainerRelationshipRepository, TableStorageTrainerRelationshipRepository>();
+            services.AddSingleton<IPokémonRelationshipRepository, TableStoragePokémonRelationshipRepository>();
         }
         
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

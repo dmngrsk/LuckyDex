@@ -1,8 +1,9 @@
-﻿using LuckyDex.Api.Interfaces.Repositories;
+﻿using System;
+using LuckyDex.Api.Interfaces.Repositories;
 using LuckyDex.Api.Models;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace LuckyDex.Api.Controllers
 {
@@ -10,32 +11,26 @@ namespace LuckyDex.Api.Controllers
     [ApiController]
     public class PokémonController : ControllerBase
     {
-        private readonly IPokémonRepository _repository;
+        private readonly IPokémonRelationshipRepository _relationshipRepository;
 
-        public PokémonController(IPokémonRepository repository)
+        public PokémonController(IPokémonRelationshipRepository relationshipRepository)
         {
-            _repository = repository;
-        }
-
-        public async Task<ActionResult<IReadOnlyCollection<Pokémon>>> GetAsync([FromQuery] bool? isTradeable, [FromQuery] bool? isLowestForm, [FromQuery] bool? isLegendary)
-        {
-            var pokémon = await _repository.GetManyAsync(isTradeable, isLowestForm, isLegendary);
-
-            return Ok(pokémon);
+            _relationshipRepository = relationshipRepository;
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Pokémon>> GetAsync(int id)
+        public async Task<ActionResult<PokémonRelationship>> GetAsync(string id)
         {
-            var pokémon = await _repository.GetAsync(id);
+            try
+            {
+                var pokémon = await _relationshipRepository.GetAsync(id);
 
-            return pokémon == null ? (ActionResult<Pokémon>)NotFound() : Ok(pokémon);
-        }
-
-        [HttpPut("{id}")]
-        public async Task PutAsync(int id, [FromBody] Pokémon value)
-        {
-            await _repository.PutAsync(id, value);
+                return pokémon == null ? (ActionResult<PokémonRelationship>) NotFound() : Ok(pokémon);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, e);
+            }
         }
     }
 }
