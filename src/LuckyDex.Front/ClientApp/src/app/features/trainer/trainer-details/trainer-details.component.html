@@ -1,0 +1,7 @@
+<h2>{{ trainerName }}'s LuckyDex</h2>
+
+<div class="inline" *ngFor="let card of cards">
+  <ld-pokemon-card [data]="card"></ld-pokemon-card>
+</div>
+
+<button class="block" mat-raised-button (click)="onClick()">Save</button>

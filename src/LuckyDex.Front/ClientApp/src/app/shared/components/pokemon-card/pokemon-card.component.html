@@ -1,0 +1,10 @@
+<mat-card (click)="toggleSelected()" class="inline" [ngStyle]="{'backgroundColor': data.selected ? 'rgb(255, 220, 50, 1.0)' : 'white' }">
+  <div>
+    <div class="centered" >
+      <img class="tile-image" [src]="data.imageUrl">
+    </div>
+
+    <p class="centered"><small>#{{ data.id }}</small></p>
+    <p class="centered">{{ data.name }}</p>
+  </div>
+</mat-card>
