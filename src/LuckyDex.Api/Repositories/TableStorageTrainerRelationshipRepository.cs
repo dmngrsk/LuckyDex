@@ -7,6 +7,7 @@ using LuckyDex.Api.Models.TableStorage;
 using Microsoft.Azure.Cosmos.Table;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace LuckyDex.Api.Repositories
@@ -63,13 +64,16 @@ namespace LuckyDex.Api.Repositories
         {
             var table = _table.Value;
 
-            var deletableRowIds = _mapper
-                .FromTrainerRelationship(await GetAsync(relationship.Trainer.Name))?
-                .ChunkBy(100);
+            var newEntityIds = relationship.Pokémon.Select(p => p.Id);
 
-            if (deletableRowIds != null)
+            var existingEntities = _mapper.FromTrainerRelationship(await GetAsync(relationship.Trainer.Name));
+            var existingEntityIds = existingEntities?.Select(e => e.PokémonId);
+
+            var entitiesToRemove = existingEntities?.Where(e => !newEntityIds.Contains(e.PokémonId)).ChunkBy(100);
+
+            if (entitiesToRemove != null)
             {
-                foreach (var chunk in deletableRowIds)
+                foreach (var chunk in entitiesToRemove)
                 {
                     var batch = new TableBatchOperation();
 
@@ -83,7 +87,9 @@ namespace LuckyDex.Api.Repositories
                 }
             }
 
-            var entitiesToUpsert = _mapper.FromTrainerRelationship(relationship);
+            var entitiesToUpsert = _mapper
+                .FromTrainerRelationship(relationship)
+                .Where(e => existingEntityIds?.Contains(e.PokémonId) != true);
 
             foreach (var chunk in entitiesToUpsert.ChunkBy(100))
             {

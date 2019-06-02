@@ -22,7 +22,7 @@ namespace LuckyDex.Api.Mappers
                 return new TrainerRelationship
                 {
                     Trainer = new Trainer { Name = trainerName },
-                    Pokémon = entities.Select(e => new Pokémon { Id = e.PokémonId, Name = e.PokémonName }).ToList()
+                    Pokémon = entities.Select(e => new Pokémon { Id = e.PokémonId }).ToList()
                 };
             }
             catch (Exception e)
@@ -41,11 +41,10 @@ namespace LuckyDex.Api.Mappers
                 }
 
                 var pokémonId = entities.Select(e => e.PokémonId).Distinct().Single();
-                var pokémonName = entities.Select(e => e.PokémonName).Distinct().Single();
                 
                 return new PokémonRelationship
                 {
-                    Pokémon = new Pokémon { Id = pokémonId, Name = pokémonName },
+                    Pokémon = new Pokémon { Id = pokémonId },
                     Trainers = entities.Select(e => new Trainer { Name = e.TrainerName }).ToList()
                 };
             }
@@ -57,7 +56,7 @@ namespace LuckyDex.Api.Mappers
 
         public IReadOnlyCollection<DexEntryEntity> FromTrainerRelationship(TrainerRelationship relationship)
         {
-            return relationship?.Pokémon.Select(p => new DexEntryEntity(p.Id, p.Name, relationship.Trainer.Name)).ToList();
+            return relationship?.Pokémon.Select(p => new DexEntryEntity(p.Id, relationship.Trainer.Name)).ToList();
         }
     }
 }
