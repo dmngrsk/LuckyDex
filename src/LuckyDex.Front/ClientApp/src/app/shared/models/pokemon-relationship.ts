@@ -1,10 +1,10 @@
-import { Trainer } from 'src/app/features/trainer/trainer';
+import { Trainer } from './trainer-relationship';
 
 export class Pokemon {
   id: string;
 }
 
 export class PokemonRelationship {
-  pokemon: Pokemon;
+  pokémon: Pokemon;
   trainers: Trainer[];
 }

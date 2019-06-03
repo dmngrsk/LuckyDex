@@ -4,7 +4,6 @@ import { HomeComponent } from './shared/components/home/home.component';
 import { NavMenuComponent } from './shared/components/nav-menu/nav-menu.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
-import { SharedModule } from './shared/shared.module';
 import { PokemonModule } from './features/pokemon/pokemon.module';
 import { TrainerModule } from './features/trainer/trainer.module';
 import { SettingsService } from './shared/services/settings.service';
@@ -21,7 +20,6 @@ import { SettingsService } from './shared/services/settings.service';
       { path: '', component: HomeComponent, pathMatch: 'full' }
     ]),
 
-    SharedModule,
     PokemonModule,
     TrainerModule,
   ],
