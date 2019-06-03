@@ -25,7 +25,7 @@ export class TrainerDetailsComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private snackBar: MatSnackBar,
-    private relationshipService: TrainerRelationshipService,
+    private trainerService: TrainerRelationshipService,
     private cardInfoService: PokemonCardInfoService
   ) { }
 
@@ -33,7 +33,7 @@ export class TrainerDetailsComponent implements OnInit {
     this.activatedRoute.params.subscribe(params => {
       this.loaded = false;
 
-      this.relationshipService.getTrainerRelationship(params.name).pipe(
+      this.trainerService.getTrainerRelationship(params.name).pipe(
         filter(f => !!f),
       ).subscribe(
         r => {
@@ -59,7 +59,7 @@ export class TrainerDetailsComponent implements OnInit {
 
     console.log(relationship);
 
-    this.relationshipService.putTrainerRelationship(relationship).subscribe(
+    this.trainerService.putTrainerRelationship(relationship).subscribe(
       _ => this.snackBar.open('LuckyDex saved successfully', 'Close', { duration: 5000 }),
       error => console.error(error)
     );

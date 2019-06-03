@@ -1,3 +1,15 @@
-<p>
-  pokemon-details works!
-</p>
+<ng-container *ngIf="loaded else loading">
+  <p>
+    The following trainers have caught {{ pokemonName }}:
+  </p>
+
+  <ul>
+    <li *ngFor="let t of trainerNames">
+      <a [routerLink]="'/trainer/' + t">{{ t }}</a>
+    </li>
+  </ul>
+</ng-container>
+
+<ng-template #loading>
+  Loading...
+</ng-template>

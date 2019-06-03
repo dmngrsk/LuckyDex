@@ -1,3 +1,15 @@
 <p>
-  pokemon-search works!
-</p>
+    Select the name of a Pokémon to see trainers that have caught it.
+  </p>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <mat-form-field>
+    <mat-label>Pokémon</mat-label>
+    <mat-select formControlName="pokemonId">
+      <mat-option *ngFor="let p of pokemon" [value]="p.value">
+        {{ p.display }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <button [ngStyle]="{'margin-left': '12px'}" mat-raised-button type="submit" [disabled]="form.invalid">Select</button>
+</form>
