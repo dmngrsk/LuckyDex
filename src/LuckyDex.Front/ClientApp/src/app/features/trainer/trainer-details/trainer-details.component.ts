@@ -17,7 +17,9 @@ import { MatSnackBar } from '@angular/material';
 })
 export class TrainerDetailsComponent implements OnInit {
 
+  loaded: boolean;
   trainerName: string;
+  trainerComment: string;
   cards: PokemonCardInfo[];
 
   constructor(
@@ -29,14 +31,21 @@ export class TrainerDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.activatedRoute.params.subscribe(params => {
-      this.trainerName = params.name;
+      this.loaded = false;
 
-      this.relationshipService.getTrainerRelationship(this.trainerName).pipe(
+      this.relationshipService.getTrainerRelationship(params.name).pipe(
         filter(f => !!f),
-        map(r => r.pokémon.map(p => p.id)),
-        map(ids => this.cardInfoService.getAllPokemonCardsInfo(ids))
       ).subscribe(
-        cs => this.cards = cs,
+        r => {
+          const ids = r.pokémon.map(p => p.id);
+          const cards = this.cardInfoService.getAllPokemonCardsInfo(ids);
+
+          this.trainerName = r.trainer.name;
+          this.trainerComment = r.trainer.comment ? r.trainer.comment : '';
+          this.cards = cards;
+
+          this.loaded = true;
+        },
         error => console.error(error)
       );
     });
@@ -44,7 +53,7 @@ export class TrainerDetailsComponent implements OnInit {
 
   onClick() {
     const relationship = <TrainerRelationship> {
-      trainer: <Trainer> { name: this.trainerName },
+      trainer: <Trainer> { name: this.trainerName, comment: this.trainerComment },
       pokémon: this.cards.filter(c => c.selected).map(c => <Pokemon> { id: c.id })
     };
 

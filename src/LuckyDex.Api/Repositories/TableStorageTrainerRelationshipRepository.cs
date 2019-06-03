@@ -15,9 +15,11 @@ namespace LuckyDex.Api.Repositories
     public class TableStorageTrainerRelationshipRepository : ITrainerRelationshipRepository
     {
         private readonly Lazy<CloudTable> _table;
+
+        private readonly ITrainerRepository _trainerRepository;
         private readonly DexEntryEntityMapper _mapper;
 
-        public TableStorageTrainerRelationshipRepository(TableStorageSettings settings)
+        public TableStorageTrainerRelationshipRepository(ITrainerRepository trainerRepository, TableStorageSettings settings)
         {
             _table = new Lazy<CloudTable>(() =>
             {
@@ -30,6 +32,7 @@ namespace LuckyDex.Api.Repositories
                 return table;
             });
 
+            _trainerRepository = trainerRepository;
             _mapper = new DexEntryEntityMapper();
         }
 
@@ -57,11 +60,16 @@ namespace LuckyDex.Api.Repositories
 
             } while (token != null);
 
-            return _mapper.ToTrainerRelationship(entries);
+            var trainerEntity = await _trainerRepository.GetAsync(name);
+            var trainer = new Trainer { Name = name, Comment = trainerEntity?.Comment };
+
+            return _mapper.ToTrainerRelationship(trainer, entries);
         }
 
         public async Task PutAsync(TrainerRelationship relationship)
         {
+            await _trainerRepository.PutAsync(relationship.Trainer);
+
             var table = _table.Value;
 
             var newEntityIds = relationship.Pokémon.Select(p => p.Id);

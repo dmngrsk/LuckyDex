@@ -3,6 +3,11 @@
   margin: 5px 5px 5px 5px;
 }
 
+.full-width {
+  margin-top: 5px;
+  width: 100%;
+}
+
 .block {
   display: block;
   width: 100%;

@@ -8,27 +8,18 @@ namespace LuckyDex.Api.Mappers
 {
     public class DexEntryEntityMapper
     {
-        public TrainerRelationship ToTrainerRelationship(IReadOnlyCollection<DexEntryEntity> entities)
+        public TrainerRelationship ToTrainerRelationship(Trainer trainer, IReadOnlyCollection<DexEntryEntity> entities)
         {
-            try
+            if (entities.Any(e => e.TrainerName != trainer.Name))
             {
-                if (!entities.Any())
-                {
-                    return null;
-                }
+                throw new ArgumentException("The collection should contain dex entries of a single trainer only.");
+            }
 
-                var trainerName = entities.Select(e => e.TrainerName).Distinct().Single();
-                
-                return new TrainerRelationship
-                {
-                    Trainer = new Trainer { Name = trainerName },
-                    Pokémon = entities.Select(e => new Pokémon { Id = e.PokémonId }).ToList()
-                };
-            }
-            catch (Exception e)
+            return new TrainerRelationship
             {
-                throw new ArgumentException("The collection should contain dex entries of a single trainer only.", e);
-            }
+                Trainer = trainer,
+                Pokémon = entities.Select(e => new Pokémon { Id = e.PokémonId }).ToList()
+            };
         }
 
         public PokémonRelationship ToPokémonRelationship(IReadOnlyCollection<DexEntryEntity> entities)
