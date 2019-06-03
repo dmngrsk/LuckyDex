@@ -1,9 +1,10 @@
-﻿using System;
-using LuckyDex.Api.Interfaces.Repositories;
+﻿using LuckyDex.Api.Interfaces.Repositories;
 using LuckyDex.Api.Models;
-using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace LuckyDex.Api.Controllers
 {
@@ -11,11 +12,11 @@ namespace LuckyDex.Api.Controllers
     [ApiController]
     public class PokémonController : ControllerBase
     {
-        private readonly IPokémonRelationshipRepository _relationshipRepository;
+        private readonly IDexEntryRepository _dexEntryRepository;
 
-        public PokémonController(IPokémonRelationshipRepository relationshipRepository)
+        public PokémonController(IDexEntryRepository dexEntryRepository)
         {
-            _relationshipRepository = relationshipRepository;
+            _dexEntryRepository = dexEntryRepository;
         }
 
         [HttpGet("{id}")]
@@ -23,9 +24,15 @@ namespace LuckyDex.Api.Controllers
         {
             try
             {
-                var pokémon = await _relationshipRepository.GetAsync(id);
+                var entries = await _dexEntryRepository.GetPokémonEntriesAsync(id);
 
-                return pokémon == null ? (ActionResult<PokémonRelationship>) NotFound() : Ok(pokémon);
+                var relationship = new PokémonRelationship
+                {
+                    Pokémon = new Pokémon { Id = id },
+                    Trainers = entries.Select(e => new Trainer {Name = e.TrainerName}).ToList()
+                };
+
+                return Ok(relationship);
             }
             catch (Exception e)
             {

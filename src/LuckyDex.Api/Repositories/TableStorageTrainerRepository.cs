@@ -42,14 +42,14 @@ namespace LuckyDex.Api.Repositories
             
             var result = await table.ExecuteQuerySegmentedAsync(query, null);
 
-            return result.Results.Select(e => new Trainer { Name = e.RowKey, Comment = e.Comment }).FirstOrDefault();
+            return result.Results.Select(e => new Trainer { Name = e.RowKey, Comment = e.Comment }).FirstOrDefault() ?? Trainer.Default(name);
         }
 
         public async Task PutAsync(Trainer trainer)
         {
             var table = _table.Value;
 
-            var operation = TableOperation.Insert(new TrainerEntity(trainer.Name, trainer.Comment));
+            var operation = TableOperation.InsertOrReplace(new TrainerEntity(trainer.Name, trainer.Comment));
 
             await table.ExecuteAsync(operation);
         }

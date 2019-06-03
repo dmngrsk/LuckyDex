@@ -26,8 +26,7 @@ namespace LuckyDex.Api
             services.AddTransient(s => dataStorage.TableStorage);
 
             services.AddSingleton<ITrainerRepository, TableStorageTrainerRepository>();
-            services.AddSingleton<ITrainerRelationshipRepository, TableStorageTrainerRelationshipRepository>();
-            services.AddSingleton<IPokémonRelationshipRepository, TableStoragePokémonRelationshipRepository>();
+            services.AddSingleton<IDexEntryRepository, TableStorageDexEntryRepository>();
         }
         
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

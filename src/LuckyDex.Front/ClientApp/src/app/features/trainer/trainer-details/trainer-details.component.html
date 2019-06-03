@@ -1,4 +1,4 @@
-<ng-container *ngIf="loaded">
+<ng-container *ngIf="loaded else loading">
   <h2>{{ trainerName }}'s LuckyDex</h2>
 
   <div>
@@ -13,3 +13,6 @@
 
   <button class="block" mat-raised-button (click)="onClick()">Save</button>
 </ng-container>
+<ng-template #loading>
+  Loading...
+</ng-template>

@@ -19,7 +19,6 @@ namespace LuckyDex.Api
             WebHost.CreateDefaultBuilder(args)
                 .ConfigureAppConfiguration((context, config) =>
                 {
-                    return;
                     if (!context.HostingEnvironment.IsProduction()) return;
 
                     var keyVaultSettings = config.Build().GetSection("KeyVault").Get<KeyVaultSettings>();

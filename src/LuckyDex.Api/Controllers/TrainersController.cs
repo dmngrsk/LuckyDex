@@ -3,6 +3,8 @@ using LuckyDex.Api.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace LuckyDex.Api.Controllers
@@ -11,11 +13,13 @@ namespace LuckyDex.Api.Controllers
     [ApiController]
     public class TrainersController : ControllerBase
     {
-        private readonly ITrainerRelationshipRepository _repository;
+        private readonly ITrainerRepository _trainerRepository;
+        private readonly IDexEntryRepository _dexEntryRepository;
 
-        public TrainersController(ITrainerRelationshipRepository repository)
+        public TrainersController(ITrainerRepository trainerRepository, IDexEntryRepository dexEntryRepository)
         {
-            _repository = repository;
+            _trainerRepository = trainerRepository;
+            _dexEntryRepository = dexEntryRepository;
         }
         
         [HttpGet("{name}")]
@@ -23,9 +27,16 @@ namespace LuckyDex.Api.Controllers
         {
             try
             {
-                var trainer = await _repository.GetAsync(name);
+                var trainer = await _trainerRepository.GetAsync(name);
+                var entries = await _dexEntryRepository.GetTrainerEntriesAsync(name);
 
-                return trainer == null ? (ActionResult<TrainerRelationship>) NotFound() : Ok(trainer);
+                var relationship = new TrainerRelationship
+                {
+                    Trainer = trainer,
+                    Pokémon = entries?.Select(e => new Pokémon { Id = e.PokémonId }).ToList()
+                };
+
+                return Ok(relationship);
             }
             catch (Exception e)
             {
@@ -43,7 +54,10 @@ namespace LuckyDex.Api.Controllers
                     return BadRequest();
                 }
 
-                await _repository.PutAsync(value);
+                var entries = value.Pokémon.Select(p => new DexEntry { PokémonId = p.Id, TrainerName = value.Trainer.Name }).ToList();
+
+                await _trainerRepository.PutAsync(value.Trainer);
+                await _dexEntryRepository.PutTrainerEntriesAsync(entries, true);
 
                 return Ok();
             }
