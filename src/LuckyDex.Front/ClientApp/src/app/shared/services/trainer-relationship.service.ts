@@ -2,17 +2,16 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { TrainerRelationship } from '../models/trainer-relationship';
+import { APPCONFIG } from 'src/app/config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TrainerRelationshipService {
 
-  baseUrl = 'http://localhost:50765';
+  baseUrl = APPCONFIG.apiAddress;
 
-  constructor(
-    private http: HttpClient
-  ) { }
+  constructor(private http: HttpClient) { }
 
   public getTrainerRelationship(name: string): Observable<TrainerRelationship> {
     const url = `${this.baseUrl}/trainers/${name}`;

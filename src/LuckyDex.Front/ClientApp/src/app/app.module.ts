@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './shared/components/home/home.component';
 import { NavMenuComponent } from './shared/components/nav-menu/nav-menu.component';
@@ -7,6 +7,7 @@ import { RouterModule } from '@angular/router';
 import { SharedModule } from './shared/shared.module';
 import { PokemonModule } from './features/pokemon/pokemon.module';
 import { TrainerModule } from './features/trainer/trainer.module';
+import { SettingsService } from './shared/services/settings.service';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,13 @@ import { TrainerModule } from './features/trainer/trainer.module';
     PokemonModule,
     TrainerModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: APP_INITIALIZER,
+      useFactory: (s: SettingsService) => () => s.getApplicationSettings(), deps: [SettingsService],
+      multi: true
+    },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

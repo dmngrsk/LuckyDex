@@ -1,3 +1,4 @@
+using LuckyDex.Front.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -9,9 +10,15 @@ namespace LuckyDex.Front
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IHostingEnvironment environment)
         {
-            Configuration = configuration;
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(environment.ContentRootPath)
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .AddJsonFile($"appsettings.{environment.EnvironmentName}.json", optional: true)
+                .AddEnvironmentVariables();
+                
+            Configuration = builder.Build();
         }
 
         public IConfiguration Configuration { get; }
@@ -24,6 +31,9 @@ namespace LuckyDex.Front
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+
+            services.AddOptions();
+            services.Configure<LuckyDexSettings>(Configuration.GetSection("LuckyDexSettings"));
         }
         
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
