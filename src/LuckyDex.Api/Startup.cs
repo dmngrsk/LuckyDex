@@ -22,6 +22,8 @@ namespace LuckyDex.Api
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
+            services.AddCors();
+
             var dataStorage = Configuration.GetSection("DataStorage").Get<DataStorageSettings>();
             services.AddTransient(s => dataStorage.TableStorage);
 
@@ -39,6 +41,12 @@ namespace LuckyDex.Api
             {
                 app.UseHsts();
             }
+
+            app.UseCors(builder => builder
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowCredentials());
 
             app.UseHttpsRedirection();
             app.UseMvc();
