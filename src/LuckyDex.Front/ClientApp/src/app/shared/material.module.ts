@@ -7,6 +7,7 @@ import {
   MatCardModule,
   MatGridListModule,
   MatSelectModule,
+  MatAutocompleteModule,
   MatProgressSpinnerModule,
   MatSnackBarModule,
 } from '@angular/material';
@@ -20,6 +21,7 @@ const MATERIAL_MODULES = [
   MatCardModule,
   MatGridListModule,
   MatSelectModule,
+  MatAutocompleteModule,
   MatProgressSpinnerModule,
   MatSnackBarModule
 ];

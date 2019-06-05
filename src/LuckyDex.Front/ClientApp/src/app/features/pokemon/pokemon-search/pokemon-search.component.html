@@ -1,15 +1,15 @@
 <p>
-  Select the name of a Pokémon to see trainers that have caught it.
+  Write the name of a Pokémon to see trainers that have caught it.
 </p>
 
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
-  <mat-form-field>
-    <mat-label>Pokémon</mat-label>
-    <mat-select formControlName="pokemonId">
-      <mat-option *ngFor="let p of pokemon" [value]="p.value">
-        {{ p.display }}
+  <mat-form-field class="pokemon-input">
+    <input matInput formControlName="pokemonName" placeholder="Pokémon name" [matAutocomplete]="auto">
+    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+      <mat-option *ngFor="let pokemon of (filteredPokemon$ | async)" [value]="pokemon">
+        {{ pokemon.name }}
       </mat-option>
-    </mat-select>
+    </mat-autocomplete>
   </mat-form-field>
-  <button [ngStyle]="{'margin-left': '12px'}" mat-raised-button type="submit" [disabled]="form.invalid">Select</button>
+  <button mat-raised-button type="submit" [disabled]="form.invalid">Select</button>
 </form>
