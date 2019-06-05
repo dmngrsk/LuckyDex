@@ -4,6 +4,7 @@ using LuckyDex.Api.Models.AppSettings;
 using LuckyDex.Api.Models.TableStorage;
 using Microsoft.Azure.Cosmos.Table;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -27,6 +28,33 @@ namespace LuckyDex.Api.Repositories
             });
         }
 
+        public async Task<IReadOnlyCollection<Trainer>> GetAllAsync()
+        {
+            var table = _table.Value;
+
+            var filter = TableQuery.GenerateFilterCondition
+            (
+                nameof(TrainerEntity.PartitionKey),
+                QueryComparisons.Equal,
+                "x"
+            );
+            
+            var query = new TableQuery<TrainerEntity>().Where(filter);
+            var entries = new List<TrainerEntity>();
+
+            TableContinuationToken token = null;
+            do
+            {
+                var result = await table.ExecuteQuerySegmentedAsync(query, token);
+
+                entries.AddRange(result.Results);
+                token = result.ContinuationToken;
+
+            } while (token != null);
+
+            return entries.Select(e => new Trainer { Name = e.RowKey, Comment = e.Comment }).ToList();
+        }
+
         public async Task<Trainer> GetAsync(string name)
         {
             var table = _table.Value;
@@ -39,7 +67,7 @@ namespace LuckyDex.Api.Repositories
             );
 
             var query = new TableQuery<TrainerEntity>().Where(filter);
-            
+
             var result = await table.ExecuteQuerySegmentedAsync(query, null);
 
             return result.Results.Select(e => new Trainer { Name = e.RowKey, Comment = e.Comment }).FirstOrDefault() ?? Trainer.Default(name);

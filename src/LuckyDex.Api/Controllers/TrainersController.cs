@@ -21,7 +21,22 @@ namespace LuckyDex.Api.Controllers
             _trainerRepository = trainerRepository;
             _dexEntryRepository = dexEntryRepository;
         }
-        
+
+        [HttpGet]
+        public async Task<ActionResult<IReadOnlyCollection<Trainer>>> GetAllAsync()
+        {
+            try
+            {
+                var trainers = await _trainerRepository.GetAllAsync();
+
+                return Ok(trainers);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, e);
+            }
+        }
+
         [HttpGet("{name}")]
         public async Task<ActionResult<TrainerRelationship>> GetAsync(string name)
         {
