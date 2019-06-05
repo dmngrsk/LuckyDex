@@ -1,13 +1,20 @@
 <ng-container *ngIf="loaded else loading">
-  <p>
-    The following trainers have caught {{ pokemonName }}:
-  </p>
+  <div *ngIf="trainerNames.length">
+    <p>
+      The following trainers have caught {{ pokemonName }}:
+    </p>
 
-  <ul>
-    <li *ngFor="let t of trainerNames">
-      <a [routerLink]="'/trainer/' + t">{{ t }}</a>
-    </li>
-  </ul>
+    <ul>
+      <li *ngFor="let t of trainerNames">
+        <a [routerLink]="'/trainer/' + t">{{ t }}</a>
+      </li>
+    </ul>
+  </div>
+  <div *ngIf="!trainerNames.length">
+    <p>
+      Looks like none of the trainers have caught {{ pokemonName }}.
+    </p>
+  </div>
 </ng-container>
 
 <ng-template #loading>
