@@ -419,7 +419,7 @@ export class PokemonCardInfoService {
     '410': 'Shieldon',
     '411': 'Bastiodon',
     '412': 'Burmy',
-    '413': 'Wormadam-plant',
+    '413': 'Wormadam',
     '414': 'Mothim',
     '415': 'Combee',
     '416': 'Vespiquen',
