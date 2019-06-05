@@ -1,10 +1,26 @@
-<p>
-  Write the name of the trainer whose Pokédex completion you want to see.
-</p>
+<ng-container *ngIf="loaded else loading">
+  <p>
+    Select the name of the trainer whose Pokédex completion you want to see.
+  </p>
 
-<form [formGroup]="form" (ngSubmit)="onSubmit()">
-  <mat-form-field class="trainer-input">
-    <input matInput formControlName="trainerName" placeholder="Trainer name">
-  </mat-form-field>
-  <button mat-raised-button type="submit" [disabled]="form.invalid">Select</button>
-</form>
+  <ul>
+    <li *ngFor="let t of trainerNames">
+      <a [routerLink]="'/trainer/' + t">{{ t }}</a>
+    </li>
+  </ul>
+
+  <p>
+    Alternatively, create your own trainer profile.
+  </p>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <mat-form-field class="trainer-input">
+      <input matInput formControlName="trainerName" placeholder="Trainer name">
+    </mat-form-field>
+    <button mat-raised-button type="submit" [disabled]="form.invalid">Create</button>
+  </form>
+</ng-container>
+
+<ng-template #loading>
+  <mat-spinner [diameter]="40"></mat-spinner>
+</ng-template>
