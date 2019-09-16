@@ -20,6 +20,7 @@ export class TrainerDetailsComponent implements OnInit {
   loaded: boolean;
   trainerName: string;
   trainerComment: string;
+  lastModified: Date;
   cards: PokemonCardInfo[];
 
   constructor(
@@ -42,6 +43,7 @@ export class TrainerDetailsComponent implements OnInit {
 
           this.trainerName = r.trainer.name;
           this.trainerComment = r.trainer.comment ? r.trainer.comment : '';
+          this.lastModified = r.trainer.lastModified;
           this.cards = cards;
 
           this.loaded = true;

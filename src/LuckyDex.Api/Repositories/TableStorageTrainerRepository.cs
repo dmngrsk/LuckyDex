@@ -52,7 +52,7 @@ namespace LuckyDex.Api.Repositories
 
             } while (token != null);
 
-            return entries.Select(e => new Trainer { Name = e.RowKey, Comment = e.Comment }).ToList();
+            return entries.Select(e => new Trainer { Name = e.RowKey, Comment = e.Comment, LastModified = e.Timestamp.LocalDateTime }).ToList();
         }
 
         public async Task<Trainer> GetAsync(string name)
@@ -70,7 +70,7 @@ namespace LuckyDex.Api.Repositories
 
             var result = await table.ExecuteQuerySegmentedAsync(query, null);
 
-            return result.Results.Select(e => new Trainer { Name = e.RowKey, Comment = e.Comment }).FirstOrDefault() ?? Trainer.Default(name);
+            return result.Results.Select(e => new Trainer { Name = e.RowKey, Comment = e.Comment, LastModified = e.Timestamp.LocalDateTime }).FirstOrDefault() ?? Trainer.Default(name);
         }
 
         public async Task PutAsync(Trainer trainer)

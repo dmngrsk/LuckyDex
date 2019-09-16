@@ -1,6 +1,8 @@
 <ng-container *ngIf="loaded else loading">
   <h2>{{ trainerName }}'s LuckyDex</h2>
 
+  <p>Last modified: {{ lastModified | date:'medium' }}</p>
+
   <div>
     <mat-form-field class="full-width">
       <textarea [(ngModel)]="trainerComment" rows="8" matInput placeholder="Comment"></textarea>
