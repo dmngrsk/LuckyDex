@@ -89,7 +89,7 @@ export class PokemonCardInfoService {
     '080': 'Slowbro',
     '081': 'Magnemite',
     '082': 'Magneton',
-    '083': 'Farfetchd',
+    '083': 'Farfetch\'d',
     '084': 'Doduo',
     '085': 'Dodrio',
     '086': 'Seel',
