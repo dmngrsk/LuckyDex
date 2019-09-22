@@ -44,5 +44,14 @@ namespace LuckyDex.Api.Repositories
 
             return result.Results.Select(e => new Routing { Name = e.RowKey, Route = e.Route }).FirstOrDefault() ?? Routing.Default(name);
         }
+
+        public async Task PutAsync(Routing routing)
+        {
+            var table = _table.Value;
+
+            var operation = TableOperation.InsertOrReplace(new RoutingEntity(routing.Name, routing.Route));
+
+            await table.ExecuteAsync(operation);
+        }
     }
 }

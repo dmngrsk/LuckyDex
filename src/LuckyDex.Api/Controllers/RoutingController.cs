@@ -32,5 +32,25 @@ namespace LuckyDex.Api.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, e);
             }
         }
+
+        [HttpPut("{name}")]
+        public async Task<ActionResult<Routing>> PutAsync(string name, [FromBody] Routing value)
+        {
+            try
+            {
+                if (value.Name != name)
+                {
+                    return BadRequest();
+                }
+
+                await _routingRepository.PutAsync(value);
+
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, e);
+            }
+        }
     }
 }
