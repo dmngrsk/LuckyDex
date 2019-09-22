@@ -14,6 +14,7 @@ export class SettingsService {
         .get<ApplicationSettings>('/api/settings')
         .subscribe(response => {
           APPCONFIG.apiAddress = response.apiAddress;
+          APPCONFIG.mapCookieName = response.mapCookieName;
 
           resolve(true);
         },
@@ -25,4 +26,5 @@ export class SettingsService {
 
 export class ApplicationSettings {
   apiAddress: string;
+  mapCookieName: string;
 }
