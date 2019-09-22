@@ -29,6 +29,7 @@ namespace LuckyDex.Api
 
             services.AddSingleton<ITrainerRepository, TableStorageTrainerRepository>();
             services.AddSingleton<IDexEntryRepository, TableStorageDexEntryRepository>();
+            services.AddSingleton<IRoutingRepository, TableStorageRoutingRepository>();
         }
         
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

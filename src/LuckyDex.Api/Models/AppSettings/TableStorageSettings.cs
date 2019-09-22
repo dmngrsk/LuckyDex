@@ -4,6 +4,7 @@
     {
         public string ConnectionString { get; set; }
         public string TrainerTableName { get; set; }
+        public string RoutingTableName { get; set; }
         public string DexEntriesTableName { get; set; }
     }
 }
