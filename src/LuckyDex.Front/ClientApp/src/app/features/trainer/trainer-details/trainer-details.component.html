@@ -9,7 +9,14 @@
     </mat-form-field>
   </div>
 
-  <div class="inline" *ngFor="let card of cards">
+  <div>
+    <mat-checkbox [(ngModel)]="displaySelected" (change)="refreshCards()">Display selected</mat-checkbox>
+  </div>
+  <div>
+    <mat-checkbox [(ngModel)]="displayUnselected" (change)="refreshCards()">Display unselected</mat-checkbox>
+  </div>
+
+  <div class="inline" *ngFor="let card of displayedCards">
     <ld-pokemon-card [data]="card"></ld-pokemon-card>
   </div>
 

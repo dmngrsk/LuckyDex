@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TrainerRelationshipService } from 'src/app/shared/services/trainer-relationship.service';
-import { Observable } from 'rxjs';
-import { filter, map, tap } from 'rxjs/operators';
+import { filter } from 'rxjs/operators';
 import { PokemonCardInfoService } from 'src/app/shared/services/pokemon-card-info.service';
 import { PokemonCardInfo } from 'src/app/shared/models/pokemon-card-info';
 import { TrainerRelationship, Trainer } from 'src/app/shared/models/trainer-relationship';
@@ -18,10 +17,14 @@ import { MatSnackBar } from '@angular/material';
 export class TrainerDetailsComponent implements OnInit {
 
   loaded: boolean;
-  trainerName: string;
-  trainerComment: string;
-  lastModified: Date;
   cards: PokemonCardInfo[];
+
+  trainerName: string;
+  lastModified: Date;
+  trainerComment: string;
+  displaySelected = true;
+  displayUnselected = true;
+  displayedCards: PokemonCardInfo[];
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -41,16 +44,25 @@ export class TrainerDetailsComponent implements OnInit {
           const ids = r.pokémon.map(p => p.id);
           const cards = this.cardInfoService.getAllPokemonCardsInfo(ids);
 
-          this.trainerName = r.trainer.name;
-          this.trainerComment = r.trainer.comment ? r.trainer.comment : '';
-          this.lastModified = r.trainer.lastModified;
+          this.loaded = true;
           this.cards = cards;
 
-          this.loaded = true;
+          this.trainerName = r.trainer.name;
+          this.lastModified = r.trainer.lastModified;
+          this.trainerComment = r.trainer.comment ? r.trainer.comment : '';
+          this.displayedCards = cards;
+
         },
         error => console.error(error)
       );
     });
+  }
+
+  refreshCards() {
+    const selectedCards = this.displaySelected ? this.cards.filter(c => c.selected) : [];
+    const unselectedCards = this.displayUnselected ? this.cards.filter(c => !c.selected) : [];
+
+    this.displayedCards = selectedCards.concat(unselectedCards).sort((a, b) => +a.id - +b.id);
   }
 
   onClick() {
@@ -58,8 +70,6 @@ export class TrainerDetailsComponent implements OnInit {
       trainer: <Trainer> { name: this.trainerName, comment: this.trainerComment },
       pokémon: this.cards.filter(c => c.selected).map(c => <Pokemon> { id: c.id })
     };
-
-    console.log(relationship);
 
     this.trainerService.putTrainerRelationship(relationship).subscribe(
       _ => this.snackBar.open('LuckyDex saved successfully', 'Close', { duration: 5000 }),

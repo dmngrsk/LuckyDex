@@ -10,6 +10,7 @@ import {
   MatAutocompleteModule,
   MatProgressSpinnerModule,
   MatSnackBarModule,
+  MatCheckboxModule,
 } from '@angular/material';
 
 const MATERIAL_MODULES = [
@@ -23,7 +24,8 @@ const MATERIAL_MODULES = [
   MatSelectModule,
   MatAutocompleteModule,
   MatProgressSpinnerModule,
-  MatSnackBarModule
+  MatSnackBarModule,
+  MatCheckboxModule
 ];
 
 @NgModule({
