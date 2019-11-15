@@ -7,6 +7,9 @@
 </p>
 
 <ul>
+  <li *ngIf="cookieReadingService.hasCookie(mapCookieName)">
+    <a class="nav-link text-dark link-active" [routerLink]="" (click)="redirectToMap()">Map</a> to see what is happening in your area.
+  </li>
   <li>
     <a routerLink="/trainer">Trainer</a> to see one's Pokédex completion.
   </li>
