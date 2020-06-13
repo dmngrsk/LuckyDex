@@ -3,6 +3,16 @@
 }
 
 .centered {
-  text-align: center;
   margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.w-96 {
+  width: 96px;
+}
+
+.mb-16 {
+  margin-bottom: 16px;
 }

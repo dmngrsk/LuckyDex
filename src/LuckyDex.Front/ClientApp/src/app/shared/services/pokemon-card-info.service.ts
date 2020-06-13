@@ -655,12 +655,16 @@ export class PokemonCardInfoService {
     '646': 'Kyurem',
     '647': 'Keldeo',
     '648': 'Meloetta',
-    '649': 'Genesect'
+    '649': 'Genesect',
+    '808': 'Meltan',
+    '809': 'Melmetal',
+    '862': 'Obstagoon',
+    '863': 'Perrserker'
   };
 
   public getPokemonCardInfo(id: string, selected: boolean = false): PokemonCardInfo {
     const name = this.dictionary[id];
-    const imageUrl = `./assets/images/pokemon/${id}.png`;
+    const imageUrl = `./assets/images/pokemon/${name.toLowerCase()}.png`;
 
     return <PokemonCardInfo> {
       id: id,
@@ -685,6 +689,9 @@ export class PokemonCardInfoService {
     if (id >= 252 && id <= 386) { return 'Hoenn'; }
     if (id >= 387 && id <= 493) { return 'Sinnoh'; }
     if (id >= 494 && id <= 649) { return 'Unova'; }
+    if (id >= 650 && id <= 721) { return 'Kalos'; }
+    if (id >= 722 && id <= 807) { return 'Alola'; }
+    if (id >= 810 && id <= 890) { return 'Galar'; }
     return 'Unknown';
   }
 }
