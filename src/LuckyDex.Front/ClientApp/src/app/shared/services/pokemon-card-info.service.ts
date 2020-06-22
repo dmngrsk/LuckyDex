@@ -659,7 +659,8 @@ export class PokemonCardInfoService {
     '808': 'Meltan',
     '809': 'Melmetal',
     '862': 'Obstagoon',
-    '863': 'Perrserker'
+    '863': 'Perrserker',
+    '865': 'Sirfetch\'d'
   };
 
   public getPokemonCardInfo(id: string, selected: boolean = false): PokemonCardInfo {
