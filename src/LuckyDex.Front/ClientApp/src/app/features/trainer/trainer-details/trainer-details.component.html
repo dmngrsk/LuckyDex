@@ -3,7 +3,9 @@
 
   <p>Last modified: {{ lastModified | date:'medium' }}</p>
 
-  <div>
+  <p><a *ngIf="!commentDisplayed" [routerLink]="" (click)="displayComment()">Show comment</a></p>
+
+  <div *ngIf="commentDisplayed">
     <mat-form-field class="full-width">
       <textarea [(ngModel)]="trainerComment" rows="8" matInput placeholder="Comment"></textarea>
     </mat-form-field>

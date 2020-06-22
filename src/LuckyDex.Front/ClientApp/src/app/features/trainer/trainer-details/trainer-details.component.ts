@@ -22,6 +22,7 @@ export class TrainerDetailsComponent implements OnInit {
   trainerName: string;
   lastModified: Date;
   trainerComment: string;
+  commentDisplayed = false;
   displaySelected = true;
   displayUnselected = true;
   displayedCards: PokemonCardInfo[];
@@ -63,6 +64,10 @@ export class TrainerDetailsComponent implements OnInit {
     const unselectedCards = this.displayUnselected ? this.cards.filter(c => !c.selected) : [];
 
     this.displayedCards = selectedCards.concat(unselectedCards).sort((a, b) => +a.id - +b.id);
+  }
+
+  displayComment() {
+    this.commentDisplayed = true;
   }
 
   onClick() {
