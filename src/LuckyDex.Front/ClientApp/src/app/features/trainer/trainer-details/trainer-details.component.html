@@ -11,11 +11,16 @@
     </mat-form-field>
   </div>
 
-  <div>
-    <mat-checkbox [(ngModel)]="displaySelected" (change)="refreshCards()">Display selected</mat-checkbox>
-  </div>
-  <div>
-    <mat-checkbox [(ngModel)]="displayUnselected" (change)="refreshCards()">Display unselected</mat-checkbox>
+  <div class="mb-4">
+    <div>
+      <mat-checkbox [(ngModel)]="displaySelected" (change)="refreshCards()">Display selected</mat-checkbox>
+    </div>
+    <div>
+      <mat-checkbox [(ngModel)]="displayUnselected" (change)="refreshCards()">Display unselected</mat-checkbox>
+    </div>
+    <div>
+      <mat-checkbox [(ngModel)]="displayObtainableOnly" (change)="refreshCards()">Display obtainable only</mat-checkbox>
+    </div>
   </div>
 
   <div class="inline" *ngFor="let card of displayedCards">
