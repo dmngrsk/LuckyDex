@@ -256,7 +256,7 @@ export class PokemonCardInfoService {
     '247': { name: 'Pupitar', obtainable: true, regional: false },
     '248': { name: 'Tyranitar', obtainable: true, regional: false },
     '249': { name: 'Lugia', obtainable: true, regional: false },
-    '250': { name: 'Ho-oh', obtainable: true, regional: false },
+    '250': { name: 'Ho-Oh', obtainable: true, regional: false },
     '251': { name: 'Celebi', obtainable: false, regional: false },
     '252': { name: 'Treecko', obtainable: true, regional: false },
     '253': { name: 'Grovyle', obtainable: true, regional: false },
