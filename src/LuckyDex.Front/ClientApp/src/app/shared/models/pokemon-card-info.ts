@@ -2,7 +2,8 @@ export class PokemonCardInfo {
   id: string;
   name: string;
   obtainable: boolean;
-  region: string;
+  regional: boolean;
+  generation: string;
   imageUrl: string;
   selected: boolean;
 }

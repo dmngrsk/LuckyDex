@@ -25,7 +25,8 @@ export class TrainerDetailsComponent implements OnInit {
   commentDisplayed = false;
   displaySelected = true;
   displayUnselected = true;
-  displayObtainableOnly = false;
+  hideUnobtainable = false;
+  hideRegional = false;
   displayedCards: PokemonCardInfo[];
 
   constructor(
@@ -66,7 +67,8 @@ export class TrainerDetailsComponent implements OnInit {
 
     this.displayedCards = selectedCards
       .concat(unselectedCards)
-      .filter(c => !this.displayObtainableOnly || c.obtainable)
+      .filter(c => !this.hideUnobtainable || c.obtainable)
+      .filter(c => !this.hideRegional || !c.regional)
       .sort((a, b) => +a.id - +b.id);
   }
 

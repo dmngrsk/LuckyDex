@@ -19,7 +19,10 @@
       <mat-checkbox [(ngModel)]="displayUnselected" (change)="refreshCards()">Display unselected</mat-checkbox>
     </div>
     <div>
-      <mat-checkbox [(ngModel)]="displayObtainableOnly" (change)="refreshCards()">Display obtainable only</mat-checkbox>
+      <mat-checkbox [(ngModel)]="hideUnobtainable" (change)="refreshCards()">Hide unobtainable</mat-checkbox>
+    </div>
+    <div>
+      <mat-checkbox [(ngModel)]="hideRegional" (change)="refreshCards()">Hide regional</mat-checkbox>
     </div>
   </div>
 
