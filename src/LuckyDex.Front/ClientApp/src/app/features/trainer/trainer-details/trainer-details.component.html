@@ -26,11 +26,18 @@
     </div>
   </div>
 
-  <div class="inline" *ngFor="let card of displayedCards">
-    <ld-pokemon-card [data]="card"></ld-pokemon-card>
-  </div>
+  <ng-container *ngIf="displayedCards.length; else noCard">
+    <div class="inline" *ngFor="let card of displayedCards">
+      <ld-pokemon-card [data]="card"></ld-pokemon-card>
+    </div>
+  </ng-container>
+  <ng-template #noCard>
+    <p>Whoops! Looks like there are no Pokémon that fit specified criteria.</p>
+  </ng-template>
 
-  <button class="block" mat-raised-button (click)="onClick()">Save</button>
+  <div class="mt-32">
+    <button class="block" mat-raised-button (click)="onClick()">Save</button>
+  </div>
 </ng-container>
 
 <ng-template #loading>
