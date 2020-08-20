@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { PokemonRelationshipService } from 'src/app/shared/services/pokemon-relationship.service';
 import { filter } from 'rxjs/operators';
 import { PokemonCardInfoService } from 'src/app/shared/services/pokemon-card-info.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'ld-pokemon-details',
@@ -18,6 +19,7 @@ export class PokemonDetailsComponent implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
+    private title: Title,
     private pokemonService: PokemonRelationshipService,
     private cardInfoService: PokemonCardInfoService
   ) { }
@@ -32,6 +34,8 @@ export class PokemonDetailsComponent implements OnInit {
         r => {
           this.trainerNames = r.trainers.map(t => t.name);
           this.pokemonName = this.cardInfoService.getPokemonCardInfo(params.id).name;
+
+          this.title.setTitle(`${this.pokemonName}'s trainer list - LuckyDex`);
 
           this.loaded = true;
         },

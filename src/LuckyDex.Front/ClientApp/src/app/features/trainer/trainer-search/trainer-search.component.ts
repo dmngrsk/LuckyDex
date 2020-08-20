@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { TrainerRelationshipService } from 'src/app/shared/services/trainer-relationship.service';
 import { filter } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'ld-trainer-search',
@@ -22,10 +23,13 @@ export class TrainerSearchComponent implements OnInit {
     private fb: FormBuilder,
     private snackBar: MatSnackBar,
     private router: Router,
+    private title: Title,
     private trainerService: TrainerRelationshipService,
   ) { }
 
   ngOnInit() {
+    this.title.setTitle('Trainer list - LuckyDex');
+
     this.trainerService.getTrainers().pipe(
       filter(f => !!f),
     ).subscribe(

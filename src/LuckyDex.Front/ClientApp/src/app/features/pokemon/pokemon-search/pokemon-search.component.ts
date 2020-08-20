@@ -6,6 +6,7 @@ import { PokemonCardInfo } from 'src/app/shared/models/pokemon-card-info';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'ld-pokemon-search',
@@ -24,10 +25,13 @@ export class PokemonSearchComponent implements OnInit {
     private fb: FormBuilder,
     private snackBar: MatSnackBar,
     private router: Router,
+    private title: Title,
     private cardInfoService: PokemonCardInfoService
   ) { }
 
   ngOnInit() {
+    this.title.setTitle('Pokémon list - LuckyDex');
+
     this.form = this.fb.group({
       pokemonName: ['', Validators.required]
     });

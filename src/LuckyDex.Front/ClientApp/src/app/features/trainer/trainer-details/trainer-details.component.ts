@@ -7,6 +7,7 @@ import { PokemonCardInfo } from 'src/app/shared/models/pokemon-card-info';
 import { TrainerRelationship, Trainer } from 'src/app/shared/models/trainer-relationship';
 import { Pokemon } from 'src/app/shared/models/pokemon-relationship';
 import { MatSnackBar } from '@angular/material';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'ld-trainer-details',
@@ -32,6 +33,7 @@ export class TrainerDetailsComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private snackBar: MatSnackBar,
+    private title: Title,
     private trainerService: TrainerRelationshipService,
     private cardInfoService: PokemonCardInfoService
   ) { }
@@ -44,6 +46,8 @@ export class TrainerDetailsComponent implements OnInit {
         filter(f => !!f),
       ).subscribe(
         r => {
+          this.title.setTitle(`${r.trainer.name}'s details - LuckyDex`);
+
           const ids = r.pokémon.map(p => p.id);
           const cards = this.cardInfoService.getAllPokemonCardsInfo(ids);
 
