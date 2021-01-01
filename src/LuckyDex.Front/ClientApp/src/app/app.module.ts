@@ -17,8 +17,8 @@ import { SettingsService } from './shared/services/settings.service';
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full' }
-    ]),
+    { path: '', component: HomeComponent, pathMatch: 'full' }
+], { relativeLinkResolution: 'legacy' }),
 
     PokemonModule,
     TrainerModule,
