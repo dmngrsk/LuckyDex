@@ -9,7 +9,7 @@
       "type": "coreclr",
       "request": "launch",
       "preLaunchTask": "build",
-      "program": "${workspaceFolder}/bin/Debug/netcoreapp2.2/LuckyDex.Front.dll",
+      "program": "${workspaceFolder}/bin/Debug/netcoreapp3.1/LuckyDex.Front.dll",
       "args": [],
       "cwd": "${workspaceFolder}",
       "stopAtEntry": false,
