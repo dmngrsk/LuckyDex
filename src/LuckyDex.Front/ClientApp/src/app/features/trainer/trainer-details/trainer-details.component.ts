@@ -6,7 +6,7 @@ import { PokemonCardInfoService } from 'src/app/shared/services/pokemon-card-inf
 import { PokemonCardInfo } from 'src/app/shared/models/pokemon-card-info';
 import { TrainerRelationship, Trainer } from 'src/app/shared/models/trainer-relationship';
 import { Pokemon } from 'src/app/shared/models/pokemon-relationship';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Title } from '@angular/platform-browser';
 
 @Component({

@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { CookieReadingService } from '../../services/cookie-reading.service';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MapRoutingService } from '../../services/map-routing.service';
 import { APPCONFIG } from 'src/app/config';
 import { Title } from '@angular/platform-browser';

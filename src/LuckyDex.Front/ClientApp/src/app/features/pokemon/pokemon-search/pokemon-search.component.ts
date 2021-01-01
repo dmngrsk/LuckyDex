@@ -5,7 +5,7 @@ import { PokemonCardInfoService } from 'src/app/shared/services/pokemon-card-inf
 import { PokemonCardInfo } from 'src/app/shared/models/pokemon-card-info';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Title } from '@angular/platform-browser';
 
 @Component({

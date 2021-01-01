@@ -3,7 +3,7 @@ import { CookieReadingService } from '../../services/cookie-reading.service';
 import { MapRoutingService } from '../../services/map-routing.service';
 import { DOCUMENT } from '@angular/common';
 import { APPCONFIG } from 'src/app/config';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'ld-nav-menu',
